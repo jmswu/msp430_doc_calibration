@@ -19,6 +19,8 @@ void DCOCalibrate(unsigned int data, bool isStable)
     unsigned int delay = 0xFFFF;
     if (!isStable) while(delay--);
 
+    __disable_interrupt();
+
     Old_BCSCTL1 = BCSCTL1;				// make a backup
     Old_TACCTL0 = TACCTL0;				// make a backup
     Old_TACTL = TACTL;					// make a backup
@@ -54,4 +56,6 @@ void DCOCalibrate(unsigned int data, bool isStable)
     TACCTL0 = Old_TACCTL0;              				// restore register
     TACTL = Old_TACTL;                  				// restore register
     BCSCTL1 = (Old_BCSCTL1 & 0xF0) + (BCSCTL1 & 0x0F);	// restore register
+
+    __enable_interrupt();
 }
