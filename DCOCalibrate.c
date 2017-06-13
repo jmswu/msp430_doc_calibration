@@ -50,7 +50,8 @@ void DCOCalibrate(unsigned int data, bool isStable)
                     BCSCTL1++;          // Sel higher RSEL
         }
     }
-    TACCTL0 = Old_TACCTL0;              		// restore register
-    TACTL = Old_TACTL;                  		// restore register
-    BCSCTL1 = BCSCTL1 | (Old_BCSCTL1 & 0xF0);   // restore register
+
+    TACCTL0 = Old_TACCTL0;              				// restore register
+    TACTL = Old_TACTL;                  				// restore register
+    BCSCTL1 = (Old_BCSCTL1 & 0xF0) + (BCSCTL1 & 0x0F);	// restore register
 }
